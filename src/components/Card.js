@@ -1,93 +1,61 @@
-import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
-
-const CardDesing = styled.div`
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  width: 90%;
-  border-radius: 5px;
-
-  &:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-  display: flex;
-  margin: 2rem;
-  justify-content: space-between;
-  flex-flow: row wrap;
-`;
-
-const Image = styled.img`
-  height: auto;
-  width: 60%;
-`;
-
-const CardData = styled.div`
-  float: right;
-  width: 60%;
-  height: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: .5rem;
-  flex: 3 1 55%;
-`;
-
-const Button = styled.button`
-  background: "green";
-  font-size: 1.3rem;
-  border-color: black;
-  border-radius: 50px;
-  padding: 7px 10px;
-  background: yellow;
-  color: black;
-  float: right;
-  margin: 5px 10px 5px 0;
-  &:hover {
-    background: white;
-  }
-`;
+import { CardDesing, Image, CardData, Button } from "./cardStyled";
 
 const Card = (props) => {
-	// console.log("!!!!!!!>>>>>" + props.shows);
-	const cutSummary =
-		props.shows.summary.length > 450
-			? props.shows.summary.slice(0, 450) + " ..."
-			: props.shows.summary;
+  let cutSummary;
 
-	console.log(cutSummary);
-	let content = (
-		<CardDesing>
-			{"      "}
-			<div
-				style={{
-					flex: "1 1 auto",
-					marginRight: "2rem",
-				}}
-			>
-				{" "}
-				<Image src={props.shows.image.medium} alt={""}></Image>
-			</div>
+  if (props.shows.summary === undefined) {
+    cutSummary = "Not Summary";
+  } else {
+    cutSummary =
+      props.shows.summary.length > 450
+        ? props.shows.summary.slice(0, 450) + " ..."
+        : props.shows.summary;
+  }
 
-			<CardData>
-				<h2>{props.shows.name}</h2>
-				<h3 style={{ fontSize: "16px" }}>Runtime: {props.shows.runtime} </h3>
-				<h4 style={{ fontSize: "16px" }}>
-					Summary:{" "}
-					<span
-						dangerouslySetInnerHTML={{
-							__html: cutSummary,
-						}}
-					></span>{" "}
-				</h4>
-				<Link to={"/show/" + props.shows.id}>
-					{" "}
-					<Button> View more details </Button>
-				</Link>
-			</CardData>
-		</CardDesing>
-	);
+  let content = (
+    <CardDesing>
+      {"      "}
+      <div
+        style={{
+          flex: "1 1 auto",
+          marginRight: "2rem",
+        }}
+      >
+        {" "}
+        {props.shows.image ? (
+          <Image src={props.shows.image.medium} alt={""}></Image>
+        ) : (
+          <Image
+            src={
+              "http://static.tvmaze.com/images/no-img/no-img-portrait-text.png"
+            }
+            alt={""}
+          ></Image>
+        )}
+      </div>
 
-	return content;
+      <CardData>
+        <h2>{props.shows.name}</h2>
+        <h3 style={{ fontSize: "16px" }}>Runtime: {props.shows.runtime} </h3>
+        <h4 style={{ fontSize: "16px" }}>
+          Summary:{" "}
+          <span
+            dangerouslySetInnerHTML={{
+              __html: cutSummary,
+            }}
+          ></span>{" "}
+        </h4>
+        <Link to={"/show/" + props.shows.id}>
+          {" "}
+          <Button> View more details </Button>
+        </Link>
+      </CardData>
+    </CardDesing>
+  );
+
+  return content;
 };
 
 export default Card;

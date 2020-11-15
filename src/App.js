@@ -7,36 +7,38 @@ import { ShowPage } from "./components/ShowPage";
 import Footer from "./components/layout/footer";
 import { default as Nav } from "./components/layout/navBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Genres from './components/Genres';
+import Genres from "./components/Genres";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import FrontPage from './components/pages/FrontPage'
-
-
+import FrontPage from "./components/pages/FrontPage";
+import Search from "./components/Search";
 
 function App() {
-	return (
-		<SerialProvider>
-			<div className="App">
-				<Router>
-					<div className="contentWrap">
-						<Nav />
-						<Route exact path="/">
-							<FrontPage />
-						</Route>
-						<Route path="/shows">
-							<ListedShows />
-						</Route>
-						<Route path="/show/:id" component={ShowPage} />
-						<Route exact path="/genres" component={Genres} />
-						<footer id="footerLink">
-							<Footer />
-						</footer>
-					</div>
-				</Router>
-			</div>
-		</SerialProvider >
-	);
+  return (
+    <SerialProvider>
+      <div className="App">
+        <Router>
+          <div className="contentWrap">
+            <Nav />
+            <Route exact path="/">
+              <FrontPage />
+            </Route>
+            <Route path="/shows">
+              <ListedShows />
+            </Route>
+            <Route path="/show/:id" component={ShowPage} />
+            <Route exact path="/genres" component={Genres} />
+
+            <Route path="/search/:searchValue" component={Search} />
+
+            <footer id="footerLink">
+              <Footer />
+            </footer>
+          </div>
+        </Router>
+      </div>
+    </SerialProvider>
+  );
 }
 
 export default App;
